@@ -10,7 +10,7 @@ using Övning15Passbokning.Data.Data;
 namespace Övning15Passbokning.Data.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210921111051_Database")]
+    [Migration("20210921122926_Database")]
     partial class Database
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -18,7 +18,7 @@ namespace Övning15Passbokning.Data.Data.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.10")
+                .HasAnnotation("ProductVersion", "5.0.9")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -223,18 +223,13 @@ namespace Övning15Passbokning.Data.Data.Migrations
 
             modelBuilder.Entity("Övning15Passbokning.Core.Models.Entities.ApplicationUserGymClass", b =>
                 {
-                    b.Property<int>("ApplicationUserId")
-                        .HasColumnType("int");
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("GymClassId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ApplicationUserId1")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("ApplicationUserId", "GymClassId");
-
-                    b.HasIndex("ApplicationUserId1");
 
                     b.HasIndex("GymClassId");
 
@@ -320,7 +315,9 @@ namespace Övning15Passbokning.Data.Data.Migrations
                 {
                     b.HasOne("Övning15Passbokning.Core.Models.Entities.ApplicationUser", "ApplicationUser")
                         .WithMany("AttendedClasses")
-                        .HasForeignKey("ApplicationUserId1");
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Övning15Passbokning.Core.Models.Entities.GymClass", "GymClass")
                         .WithMany("AttendingMembers")
