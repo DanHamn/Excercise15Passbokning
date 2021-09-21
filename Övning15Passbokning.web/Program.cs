@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Övning15Passbokning.web
+namespace Övning15Passbokning.Web
 {
     public class Program
     {
