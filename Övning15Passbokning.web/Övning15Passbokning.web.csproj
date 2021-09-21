@@ -13,4 +13,9 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.10" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Övning15.Passbokning.Core\Övning15Passbokning.Core.csproj" />
+    <ProjectReference Include="..\Övning15.Passbokning.Data\Övning15Passbokning.Data.csproj" />
+  </ItemGroup>
+
 </Project>

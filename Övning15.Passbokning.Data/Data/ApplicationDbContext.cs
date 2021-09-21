@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Övning15Passbokning.web.Data
+namespace Övning15Passbokning.Data.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {

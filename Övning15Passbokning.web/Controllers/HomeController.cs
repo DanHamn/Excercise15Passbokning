@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Övning15Passbokning.web.Models;
+using Övning15Passbokning.Core.Models;
+using Övning15Passbokning.Core.Models.ViewModels.Common;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Övning15Passbokning.web.Controllers
+namespace Övning15Passbokning.Web.Controllers
 {
     public class HomeController : Controller
     {

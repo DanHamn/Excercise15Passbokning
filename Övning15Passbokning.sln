@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31702.278
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Övning15Passbokning.web", "Övning15Passbokning.web\Övning15Passbokning.web.csproj", "{AB9C8896-371B-473F-8C1A-8B3D10E7352F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Övning15Passbokning.Web", "Övning15Passbokning.web\Övning15Passbokning.Web.csproj", "{AB9C8896-371B-473F-8C1A-8B3D10E7352F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Övning15.Passbokning.Core", "Övning15.Passbokning.Core\Övning15.Passbokning.Core.csproj", "{5C07B1B4-EB9B-4F68-B6F0-3B63CA8CFD5E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Övning15Passbokning.Core", "Övning15.Passbokning.Core\Övning15Passbokning.Core.csproj", "{5C07B1B4-EB9B-4F68-B6F0-3B63CA8CFD5E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Övning15.Passbokning.Data", "Övning15.Passbokning.Data\Övning15.Passbokning.Data.csproj", "{C86F8E4D-47D9-4611-AF30-EAC843092C2B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Övning15Passbokning.Data", "Övning15.Passbokning.Data\Övning15Passbokning.Data.csproj", "{C86F8E4D-47D9-4611-AF30-EAC843092C2B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
