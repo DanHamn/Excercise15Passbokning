@@ -3,8 +3,8 @@
     public class ApplicationUserGymClass
     {
         //Foreign Keys
-        public int GymClassId { get; internal set; }
-        public string ApplicationUserId { get; internal set; }
+        public int GymClassId { get; set; }
+        public string ApplicationUserId { get; set; }
 
         //Navigation properties
         public GymClass GymClass { get; set; }

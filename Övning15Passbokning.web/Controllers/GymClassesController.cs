@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,10 +15,12 @@ namespace Övning15Passbokning.Web.Controllers
     public class GymClassesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public GymClassesController(ApplicationDbContext context)
+        public GymClassesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
-            _context = context;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
         }
 
         // GET: GymClasses
@@ -35,10 +39,16 @@ namespace Övning15Passbokning.Web.Controllers
 
             var gymClass = await _context.GymClass
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (gymClass == null)
             {
                 return NotFound();
             }
+
+            gymClass.AttendingMembers = await _context.ApplicationUserGymClassess
+                .Where(e=>e.GymClassId==id)
+                .Include(e => e.ApplicationUser)
+                .ToListAsync();
 
             return View(gymClass);
         }
@@ -148,6 +158,33 @@ namespace Övning15Passbokning.Web.Controllers
         private bool GymClassExists(int id)
         {
             return _context.GymClass.Any(e => e.Id == id);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> BookingToggle(int? id)
+        {
+            if (id == null) return NotFound();
+
+            var userId = _userManager.GetUserId(User);
+
+            var booked = await _context.ApplicationUserGymClassess.FindAsync(userId, id);
+
+            if (booked is null)
+            {
+                var booking = new ApplicationUserGymClass
+                {
+                    GymClassId = (int)id,
+                    ApplicationUserId = userId
+                };
+                _context.ApplicationUserGymClassess.Add(booking);
+            }
+            else
+            {
+                _context.ApplicationUserGymClassess.Remove(booked);
+            }
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }
