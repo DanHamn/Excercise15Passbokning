@@ -30,6 +30,7 @@ namespace Övning15Passbokning.Web.Controllers
         }
 
         // GET: GymClasses/Details/5
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -54,6 +55,7 @@ namespace Övning15Passbokning.Web.Controllers
         }
 
         // GET: GymClasses/Create
+        [Authorize]
         public IActionResult Create()
         {
             return View();
@@ -64,6 +66,7 @@ namespace Övning15Passbokning.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Create([Bind("Id,Name,StartTime,Duration,Description")] GymClass gymClass)
         {
             if (ModelState.IsValid)
@@ -76,6 +79,7 @@ namespace Övning15Passbokning.Web.Controllers
         }
 
         // GET: GymClasses/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -96,6 +100,7 @@ namespace Övning15Passbokning.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,StartTime,Duration,Description")] GymClass gymClass)
         {
             if (id != gymClass.Id)
@@ -127,6 +132,7 @@ namespace Övning15Passbokning.Web.Controllers
         }
 
         // GET: GymClasses/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -145,6 +151,7 @@ namespace Övning15Passbokning.Web.Controllers
         }
 
         // POST: GymClasses/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
