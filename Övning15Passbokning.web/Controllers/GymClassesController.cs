@@ -26,7 +26,7 @@ namespace Övning15Passbokning.Web.Controllers
         // GET: GymClasses
         public async Task<IActionResult> Index()
         {
-            return View(await _context.GymClass.ToListAsync());
+            return View(await _context.GymClasses.ToListAsync());
         }
 
         // GET: GymClasses/Details/5
@@ -38,7 +38,7 @@ namespace Övning15Passbokning.Web.Controllers
                 return NotFound();
             }
 
-            var gymClass = await _context.GymClass
+            var gymClass = await _context.GymClasses
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (gymClass == null)
@@ -55,7 +55,7 @@ namespace Övning15Passbokning.Web.Controllers
         }
 
         // GET: GymClasses/Create
-        [Authorize]
+        [Authorize(Roles ="Admin")]
         public IActionResult Create()
         {
             return View();
@@ -79,7 +79,7 @@ namespace Övning15Passbokning.Web.Controllers
         }
 
         // GET: GymClasses/Edit/5
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -87,7 +87,7 @@ namespace Övning15Passbokning.Web.Controllers
                 return NotFound();
             }
 
-            var gymClass = await _context.GymClass.FindAsync(id);
+            var gymClass = await _context.GymClasses.FindAsync(id);
             if (gymClass == null)
             {
                 return NotFound();
@@ -100,7 +100,7 @@ namespace Övning15Passbokning.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,StartTime,Duration,Description")] GymClass gymClass)
         {
             if (id != gymClass.Id)
@@ -132,7 +132,7 @@ namespace Övning15Passbokning.Web.Controllers
         }
 
         // GET: GymClasses/Delete/5
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -140,7 +140,7 @@ namespace Övning15Passbokning.Web.Controllers
                 return NotFound();
             }
 
-            var gymClass = await _context.GymClass
+            var gymClass = await _context.GymClasses
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (gymClass == null)
             {
@@ -151,20 +151,20 @@ namespace Övning15Passbokning.Web.Controllers
         }
 
         // POST: GymClasses/Delete/5
-        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var gymClass = await _context.GymClass.FindAsync(id);
-            _context.GymClass.Remove(gymClass);
+            var gymClass = await _context.GymClasses.FindAsync(id);
+            _context.GymClasses.Remove(gymClass);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool GymClassExists(int id)
         {
-            return _context.GymClass.Any(e => e.Id == id);
+            return _context.GymClasses.Any(e => e.Id == id);
         }
 
         [Authorize]
@@ -180,8 +180,8 @@ namespace Övning15Passbokning.Web.Controllers
             {
                 var booking = new ApplicationUserGymClass
                 {
-                    GymClassId = (int)id,
-                    ApplicationUserId = userId
+                    ApplicationUserId = userId,
+                    GymClassId = (int)id
                 };
                 _context.ApplicationUserGymClassess.Add(booking);
             }
@@ -189,6 +189,7 @@ namespace Övning15Passbokning.Web.Controllers
             {
                 _context.ApplicationUserGymClassess.Remove(booked);
             }
+
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
