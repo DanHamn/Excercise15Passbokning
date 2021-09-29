@@ -41,7 +41,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.AttendingMembers.FirstOrDefault().ApplicationUser.Email)
+                @Html.DisplayNameFor(model => model.AttendingMembers.FirstOrDefault().ApplicationUser.FullName)
             </th>
 
         </tr>
@@ -51,7 +51,7 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ApplicationUser.Email)
+                    @Html.DisplayFor(modelItem => item.ApplicationUser.FullName)
                 </td>
             </tr>
         }

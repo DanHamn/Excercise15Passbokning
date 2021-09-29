@@ -37,7 +37,10 @@ namespace Övning15Passbokning.Data.Data
                 {
                     UserName = adminEmail,
                     Email = adminEmail,
-                    EmailConfirmed = true
+                    EmailConfirmed = true,
+                    FirstName="Ad",
+                    LastName="Min"
+                    
                 };
 
                 await userManager.CreateAsync(admin, "Abc123!");

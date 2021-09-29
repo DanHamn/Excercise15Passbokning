@@ -46,6 +46,13 @@ namespace Övning15Passbokning.Web.Areas.Identity.Pages.Account
 
         public class InputModel
         {
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
+            public string FullName { get { return FirstName + " " + LastName; } }
+
+
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
@@ -61,6 +68,9 @@ namespace Övning15Passbokning.Web.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [DataType(DataType.DateTime)]
+            public DateTime TimeOfRegistration { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -75,7 +85,13 @@ namespace Övning15Passbokning.Web.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email };
+                var user = new ApplicationUser {
+                    UserName = Input.Email,
+                    Email = Input.Email,
+                    FirstName = Input.FirstName,
+                    LastName = Input.LastName,
+                    TimeOfRegistration = DateTime.Now
+                };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
