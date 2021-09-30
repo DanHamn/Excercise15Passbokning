@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Övning15Passbokning.Core.Models.Entities;
+using Övning15Passbokning.Core.Models.ViewModels;
 using Övning15Passbokning.Data.Data;
 
 namespace Övning15Passbokning.Web.Controllers
@@ -26,7 +27,21 @@ namespace Övning15Passbokning.Web.Controllers
         // GET: GymClasses
         public async Task<IActionResult> Index()
         {
-            return View(await _context.GymClasses.ToListAsync());
+            var userId = _userManager.GetUserId(User);
+
+            var model = _context.GymClasses
+                .Select(e =>
+               new GymClassesViewModel
+               {
+                   Id = e.Id,
+                   Name = e.Name,
+                   StartTime = e.StartTime,
+                   Duration = e.Duration,
+                   Description = e.Description,
+                   Attending = _context.ApplicationUserGymClassess.Any(x => x.ApplicationUserId == userId && x.GymClassId == e.Id)
+               });
+
+            return View(await model.ToListAsync());
         }
 
         // GET: GymClasses/Details/5
@@ -47,7 +62,7 @@ namespace Övning15Passbokning.Web.Controllers
             }
 
             gymClass.AttendingMembers = await _context.ApplicationUserGymClassess
-                .Where(e=>e.GymClassId==id)
+                .Where(e => e.GymClassId == id)
                 .Include(e => e.ApplicationUser)
                 .ToListAsync();
 
@@ -55,7 +70,7 @@ namespace Övning15Passbokning.Web.Controllers
         }
 
         // GET: GymClasses/Create
-        [Authorize(Roles ="Admin")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
