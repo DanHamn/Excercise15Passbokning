@@ -30,6 +30,7 @@ namespace Övning15Passbokning.Web.Controllers
             var userId = _userManager.GetUserId(User);
 
             var model = _context.GymClasses
+                .Where(f => f.StartTime >= DateTime.Now)
                 .Select(e =>
                new GymClassesViewModel
                {
